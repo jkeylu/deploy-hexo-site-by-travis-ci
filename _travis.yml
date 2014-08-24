@@ -1,3 +1,10 @@
+# 通过 travis-ci 自动部署 hexo 生成的网站
+# https://github.com/jkeylu/deploy-hexo-site-by-travis-ci
+# LICENSE: MIT
+#
+# 请把此文件拷贝到你 hexo 网站的 repo 的根目录下，并更名为 '.travis.yml'
+# 然后根据自己需求进行相应更改
+
 # 使用的语言
 language: node_js
 
@@ -21,10 +28,11 @@ install:
 # 运行脚本前
 # 设置 git 配置
 # 获取主题，如果主题已经一同放在 themes/ 文件夹下，这步就可以注释掉
+# *注意*  修改 'YOUR NAME' 和 'YOUR EMAIL'
 before_script:
 - git config --global user.name 'YOUR NAME'
 - git config --global user.email 'YOUR EMAIL'
-# - git clone git://github.com/heroicyang/hexo-theme-modernist.git themes/hexo-theme-modernist
+# - git clone git://github.com/heroicyang/hexo-theme-modernist.git themes/modernist
 
 # 生成页面
 script:
@@ -49,7 +57,7 @@ after_success:
 # 地址: https://github.com/settings/applications#personal-access-tokens
 # 然后加密 repo 地址
 # travis 命令见: http://docs.travis-ci.com/user/encryption-keys/
-# travis encrypt DEPLOY_REPO=https://6b75cfe9836f56e6d21187622730889874476c23@github.com/jkeylu/test-hexo-on-travis-ci.git --add
+# travis encrypt DEPLOY_REPO=https://6b75cfe9836f56e6d21187622730889874476c23@github.com/jkeylu/test-hexo-on-travis-ci.git
 env:
   global:
     secure: j8xMFmBDjUvqmKwLCWhXG1wKi4DsGGtN6vJ4aBxCp3ka5iusxHKBBHsi465ppbKYZF4eGugoXFT7dknCZyEcdIxxqNhFxY4qjm9K6KWXakVsqMz3YngbqDPFS5UJZr3DUxTlE0RPxkBgty+N1qiAkf2LTm1x4UygKIM7AKINbQE=
