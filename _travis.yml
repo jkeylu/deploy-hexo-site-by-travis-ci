@@ -16,7 +16,6 @@ language: node_js
 node_js:
 - 0.1
 
-# 触发的分支
 branches:
   only:
   - master
