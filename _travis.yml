@@ -1,14 +1,18 @@
-# 通过 travis-ci 自动部署 hexo 生成的网站
+# Deploy hexo site by travis-ci
 # https://github.com/jkeylu/deploy-hexo-site-by-travis-ci
 # LICENSE: MIT
 #
-# 请把此文件拷贝到你 hexo 网站的 repo 的根目录下，并更名为 '.travis.yml'
-# 然后根据自己需求进行相应更改
+# 1. Copy this file to the root of your repository, then rename it to '.travis.yml'
+# 2. Replace 'YOUR NAME' and 'YOUR EMAIL' at line 29
+# 3. Add an Environment Variable 'DEPLOY_REPO'
+#     1. Generate github access token on https://github.com/settings/applications#personal-access-tokens
+#     2. Add an Environment Variable on https://travis-ci.org/{github username}/{repository name}/settings/env_vars
+#         Variable Name: DEPLOY_REPO
+#         Variable Value: https://{githb access token}@github.com/{github username}/{repository name}.git 
+#         Example: DEPLOY_REPO=https://6b75cfe9836f56e6d21187622730889874476c23@github.com/jkeylu/test-hexo-on-travis-ci.git
 
-# 使用的语言
 language: node_js
 
-# node.js 版本
 node_js:
 - 0.1
 
@@ -17,30 +21,21 @@ branches:
   only:
   - master
 
-# 安装 hexo
 before_install:
 - npm install -g hexo
 
-# 安装依赖
 install:
 - npm install
 
-# 运行脚本前
-# 设置 git 配置
-# 获取主题，如果主题已经一同放在 themes/ 文件夹下，这步就可以注释掉
-# *注意*  修改 'YOUR NAME' 和 'YOUR EMAIL'
+# Notice: Replace 'YOUR NAME' and 'YOUR EMAIL'
 before_script:
 - git config --global user.name 'YOUR NAME'
 - git config --global user.email 'YOUR EMAIL'
 # - git clone git://github.com/heroicyang/hexo-theme-modernist.git themes/modernist
 
-# 生成页面
 script:
 - hexo generate
 
-# 生成页面成功后，进行部署
-# 先远程获取 gh-pages 分支，把生成的页面文件部署到此分支下
-# 如果是第一次提交的话，初始化这个 repo
 after_success:
 - mkdir .deploy
 - cd .deploy
@@ -51,13 +46,3 @@ after_success:
 - git commit -m 'Site updated'
 - git branch -m gh-pages
 - git push -q -u origin gh-pages
-
-# 加密 repo 的地址
-# 生成 token，权限可以只选 public_repo
-# 地址: https://github.com/settings/applications#personal-access-tokens
-# 然后加密 repo 地址
-# travis 命令见: http://docs.travis-ci.com/user/encryption-keys/
-# travis encrypt DEPLOY_REPO=https://6b75cfe9836f56e6d21187622730889874476c23@github.com/jkeylu/test-hexo-on-travis-ci.git
-env:
-  global:
-    secure: j8xMFmBDjUvqmKwLCWhXG1wKi4DsGGtN6vJ4aBxCp3ka5iusxHKBBHsi465ppbKYZF4eGugoXFT7dknCZyEcdIxxqNhFxY4qjm9K6KWXakVsqMz3YngbqDPFS5UJZr3DUxTlE0RPxkBgty+N1qiAkf2LTm1x4UygKIM7AKINbQE=
